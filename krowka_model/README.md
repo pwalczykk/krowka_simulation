@@ -17,7 +17,7 @@ Package contains multibody simulation (MBS) of Krowka robotic arm in Gazebo and 
 1. Copy simulation source code from server
     - $ mkdir -p ~/krowka_simulation/src
     - $ cd ~/krowka_simulation/src
-    - $ git clone https://gitlab.com/aghspace/rover-krowka-simulation-ros.git .
+    - $ git clone https://github.com/pwalczykk/krowka_simulation.git .
 
 2. Install dependencies
     - $ cd ~/krowka_simulation/src
@@ -33,9 +33,26 @@ Package contains multibody simulation (MBS) of Krowka robotic arm in Gazebo and 
 
 
 # Launching:
-1. Starting simulation server (choose 1 from 2 below)
-    - $ roslaunch krowka_simulation_model start_gazebo_flat.launch (lightweight)
-    - $ roslaunch krowka_simulation_model start_gazebo_heightmap.launch (full enviroment)
+## Drag and drop mode with inverse kinematics
+1. Starting simulation server
+    - $ roslaunch krowka_model krowka_gazebo.launch
 
-2. Starting rover motors controllers, loacalization and teleoperation
-    - $roslaunch krowka_simulation_model start_platform.launch
+2. Starting robot motors controllers and camera
+    - $ roslaunch krowka_model krowka_controllers.launch
+
+3. Starting inverse kinematics node
+    - $ roslaunch krowka_model krowka_inverse_kinematics.launch
+
+4. Starting trajectory planer
+    - $ roscd krowka_model/scripts
+    - $ ./run_trajectory.sh
+
+## Teleoperation mode - controlling joints
+1. Starting simulation server
+    - $ roslaunch krowka_model krowka_gazebo.launch
+
+2. Starting robot motors controllers and camera
+    - $ roslaunch krowka_model krowka_controllers.launch
+
+3. Starting teleoperation gui
+    - $ roslaunch krowka_model krowka_teleop.launch
