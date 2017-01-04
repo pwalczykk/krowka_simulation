@@ -1,0 +1,20 @@
+<launch>
+    <!-- dynamic reconfigure server, allows to control manipulator using sliders -->
+    <node
+        name="krowka_slider_controller"
+        pkg="krowka_model"
+        type="krowka_slider_controller"
+        respawn="false"
+        output="screen"
+    />
+
+    <!-- gui used for simple manipulator control and PID tuning (PID values are not saved after killing app) -->
+    <node
+        name="rqt_reconfigure"
+        pkg="rqt_reconfigure"
+        type="rqt_reconfigure"
+        respawn="false"
+        output="screen"
+    />
+
+</launch>

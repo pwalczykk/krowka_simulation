@@ -1,0 +1,10 @@
+<launch>
+    <!-- inverse kinematics node -->
+    <node
+        name="krowka_inverse_kinematics"
+        pkg="krowka_model"
+        type="krowka_inverse_kinematics"
+        respawn="false"
+        output="screen"
+    />
+</launch>

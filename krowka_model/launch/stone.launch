@@ -1,0 +1,14 @@
+<launch>
+    <param
+        name="stone0_description"
+        command="$(find xacro)/xacro --inorder $(find krowka_model)/urdf/stone/1_model/stone0.xacro"
+    />
+
+    <node
+        name="spawn_urdf"
+        pkg="gazebo_ros"
+        type="spawn_model"
+        args="-param stone0_description -urdf -model stone0 -x 0.1 -y 0.1 -z 0.12 -roll -2.696399 -pitch 0.730715 -yaw -2.584248"
+    />
+
+</launch>

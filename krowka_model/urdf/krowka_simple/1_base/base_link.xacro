@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="krowka">
+
+    <xacro:macro name="base_link" params="name">
+
+        <!-- WORLD -->
+        <link name="world"/>
+
+        <joint name="fixed" type="fixed">
+            <parent link="world"/>
+            <child link="${name}"/>
+        </joint>
+
+        <!-- LINK -->
+        <xacro:macro name="base_link_mesh">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://krowka_model/urdf/krowka/mesh/stl/base_link.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </xacro:macro>
+
+        <xacro:macro name="base_link_primitive">
+            <origin rpy="0 0 0" xyz="0 0 0.06"/>
+            <geometry>
+                <box size="1 1 .1"/>
+            </geometry>
+        </xacro:macro>
+
+
+        <xacro:macro name="base_link_color">
+            <material name="base_link_color">
+                <color rgba=".8 .8 .8 1"/>
+            </material>
+        </xacro:macro>
+
+        <link name="${name}">
+            <visual>
+                <xacro:base_link_primitive/>
+                <xacro:base_link_color/>
+            </visual>
+
+            <collision>
+                <xacro:base_link_primitive/>
+            </collision>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="1.070"/>
+                <inertia ixx="0.009" ixy="0.000" ixz="-0.002" iyy="0.010" iyz="0.000" izz="0.005"/>
+            </inertial>
+        </link>
+        <gazebo reference="${name}">
+            <mu1> .2 </mu1>
+            <mu2> .2 </mu2>
+            <material> Gazebo/Blue </material>
+            <selfCollide>False</selfCollide>
+        </gazebo>
+
+
+    </xacro:macro>
+</robot>

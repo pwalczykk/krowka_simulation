@@ -1,0 +1,51 @@
+<launch>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find krowka_model)/urdf/krowka_simple/yaml/config.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node
+        name="controller_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        respawn="false"
+        output="screen"
+        ns="/krowka"
+        args="link_0_position_controller
+              link_1_position_controller
+              link_2_position_controller
+              link_3_position_controller
+              grip_0_position_controller
+              grip_1_position_controller
+              joint_state_controller"/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+    <node
+        name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher"
+        respawn="false"
+        output="screen">
+        <remap from="/joint_states" to="/krowka/joint_states" />
+    </node>
+
+    <!-- displaying image from camera in window,
+    image transport can be: "raw", "compressed", "theora". Description here: http://wiki.ros.org/image_transport
+    other params are described in node's README.txt (gripper_model/src/display_image_opencv/README.txt) -->
+
+    <node
+        name="display_image_opencv"
+        pkg="gripper_model"
+        type="display_image_opencv"
+        respawn="false"
+        output="screen">
+        <param name="camera_name" value="camera1"/>
+        <param name="topic" value="/camera1/image"/>
+        <param name="width" value="640"/>
+        <param name="height" value="480"/>
+        <param name="x" value="20"/>
+        <param name="y" value="20"/>
+        <param name="image_transport" value="compressed"/>
+    </node>
+
+</launch>

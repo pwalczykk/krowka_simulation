@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="krowka">
+
+<!-- FILES INCLUDED -->
+
+    <xacro:include filename="0_utils/gazebo_ros_control.xacro"/>
+    <xacro:include filename="1_base/base_link.xacro"/>
+    <xacro:include filename="2_links/link_0.xacro"/>
+    <xacro:include filename="2_links/link_1.xacro"/>
+    <xacro:include filename="2_links/link_2.xacro"/>
+    <xacro:include filename="2_links/link_3.xacro"/>
+    <xacro:include filename="3_gripper/grip.xacro"/>
+    <xacro:include filename="4_sensors/camera.xacro"/>
+
+
+
+<!-- MODEL DEFINITION -->
+
+    <xacro:base_link    name="base_link"/>
+
+    <!-- Kinematic description of manipulator. Variables trans_x, trans_y, trans_z contains translations
+         of featured link relarively to its parent link, in parent's coordinate frame.
+         Origin's rotations are not required, becouse in initial pose rotations of all
+         links are the same (arm is directed to thr top)
+         Limits, effort, (max) velocity and damping are properties of joint
+         between featured link and it's parent link-->
+
+    <xacro:link_0   parent="base_link"
+                    trans_x="0.000"
+                    trans_y="0.000"
+                    trans_z="0.120"
+                    name="link_0"
+                    low_limit="-3.14"
+                    high_limit="3.14"
+                    effort="10"
+                    velocity="0.4"
+                    damping="10"/>
+
+    <xacro:link_1   parent="link_0"
+                    trans_x="-0.025"
+                    trans_y=" 0.000"
+                    trans_z=" 0.070"
+                    name="link_1"
+                    low_limit="-1.9"
+                    high_limit="2.0"
+                    effort="10"
+                    velocity="0.4"
+                    damping="10"/>
+
+    <xacro:link_2   parent="link_1"
+                    trans_x="0.000"
+                    trans_y="0.000"
+                    trans_z="0.360"
+                    name="link_2"
+                    low_limit="-2.0"
+                    high_limit="2.8"
+                    effort="5"
+                    velocity="0.4"
+                    damping="5"/>
+
+
+    <xacro:link_3   parent="link_2"
+                    trans_x="0.000"
+                    trans_y="0.000"
+                    trans_z="0.2755"
+                    name="link_3"
+                    low_limit="-2.1"
+                    high_limit="2.1"
+                    effort="5"
+                    velocity="0.4"
+                    damping="3"/>
+
+
+    <xacro:grip     parent="link_3"
+                    trans_x="0.02"
+                    trans_y="0.000"
+                    trans_z="0.106"
+                    name="grip_0"
+                    low_limit="-0.2"
+                    high_limit="0.5"
+                    effort="10"
+                    velocity="0.4"
+                    damping="3"
+                    axis="1"
+                    rot_yaw="0.00"
+                    no="0"/>
+
+    <xacro:grip     parent="link_3"
+                    trans_x="-0.02"
+                    trans_y="0.000"
+                    trans_z="0.106"
+                    name="grip_1"
+                    low_limit="-0.2"
+                    high_limit="0.5"
+                    effort="10"
+                    velocity="0.4"
+                    damping="3"
+                    axis="-1"
+                    rot_yaw="3.1416"
+                    no="1"/>
+
+    <xacro:camera_link  parent="link_0"
+                    trans_x="-0.20"
+                    trans_y="-0.20"
+                    trans_z=" 0.450"
+                    rot_roll="0.0"
+                    rot_pitch="0.7"
+                    rot_yaw="0.7"
+                    name="camera1"
+        />
+
+</robot>
